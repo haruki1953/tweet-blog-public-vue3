@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { ImageStoreData } from '@/types'
 import { onMounted, ref, watch } from 'vue'
-import AlbumInfo from './components/AlbumInfo.vue'
 import { useElementSize } from '@vueuse/core'
 import { useRoute, useRouter } from 'vue-router'
 import type ImageSelector from '@/components/image/ImageSelector.vue'
@@ -57,7 +56,6 @@ onMounted(() => {
     <DataContainerMountedMask>
       <Col2Layout reverse>
         <template #colLeftSm>
-          <AlbumInfo></AlbumInfo>
           <ImageEditDialog
             v-model="imagesData"
             autoOpen
@@ -67,8 +65,6 @@ onMounted(() => {
         <template #colLeft>
           <div :key="imagesData.map((i) => i.id).toString()">
             <DataContainerMountedMask>
-              <AlbumInfo></AlbumInfo>
-
               <div class="image-edit-card-container">
                 <!-- <div
             class="image-edit-card-container"

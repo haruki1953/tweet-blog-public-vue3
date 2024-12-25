@@ -14,13 +14,8 @@ import type { PostData, PostsGetMode } from '@/types'
 import { formatTimeAgoChs } from '@/utils'
 import { usePostStore } from '@/stores'
 import { computed, ref } from 'vue'
-import type PostDeleteDialog from './PostDeleteDialog.vue'
 import { useRouter } from 'vue-router'
-import {
-  usePostDeleteService,
-  usePostFavoriteService,
-  usePostReadService
-} from '@/services'
+import { usePostFavoriteService, usePostReadService } from '@/services'
 
 const props = withDefaults(
   defineProps<{
@@ -52,23 +47,6 @@ const forwardPost = () => {
   router.push({ name: 'post-forward', params: { id: props.data.id } })
 }
 
-const editPost = () => {
-  postStore.toUpdateSendPage(props.data)
-}
-
-const { isDeleting, deletePost, isRestoring, restorePost } =
-  usePostDeleteService({
-    propsdata: computed(() => props.data)
-  })
-
-const refPostDeleteDialog = ref<InstanceType<typeof PostDeleteDialog> | null>(
-  null
-)
-const isDeleteEverlasting = ref(false)
-const deletePostEverlast = async () => {
-  refPostDeleteDialog.value?.open()
-}
-
 const propsdata = computed(() => props.data)
 const propsmini = computed(() => props.mini)
 
@@ -87,12 +65,6 @@ const { setFavorite, topFavorite, removeFavorite, isFavorite } =
     @mouseup="setRead"
     @touchend="setRead"
   >
-    <PostDeleteDialog
-      v-if="!mini && data.isDeleted"
-      ref="refPostDeleteDialog"
-      :data="data"
-      v-model:isDeleteEverlasting="isDeleteEverlasting"
-    ></PostDeleteDialog>
     <div class="badge-box">
       <Transition name="fade-pop">
         <div class="new-badge" v-show="!isRead">
@@ -181,34 +153,8 @@ const { setFavorite, topFavorite, removeFavorite, isFavorite } =
               </div>
             </div>
           </div>
-          <div class="trans-button-box" v-else-if="data.isDeleted">
-            <div class="button-box">
-              <div class="button-center">
-                <el-button
-                  type="success"
-                  :icon="RefreshLeft"
-                  round
-                  size="small"
-                  :loading="isRestoring"
-                  @click="restorePost"
-                >
-                  还原推文
-                </el-button>
-                <el-button
-                  type="danger"
-                  :icon="Remove"
-                  round
-                  size="small"
-                  :loading="isDeleteEverlasting"
-                  @click="deletePostEverlast"
-                >
-                  永久删除
-                </el-button>
-              </div>
-            </div>
-          </div>
           <div class="trans-button-box" v-else>
-            <div class="button-box">
+            <div class="button-box main">
               <div class="replies-lable">
                 <div class="count" v-if="data._count.replies > 0">
                   {{ data._count.replies }}
@@ -222,13 +168,13 @@ const { setFavorite, topFavorite, removeFavorite, isFavorite } =
                   size="small"
                   @click="lookPost"
                 />
-                <el-button
+                <!-- <el-button
                   type="info"
                   :icon="EditPen"
                   circle
                   size="small"
                   @click="editPost"
-                />
+                /> -->
                 <el-button
                   v-if="isFavorite"
                   type="warning"
@@ -245,14 +191,14 @@ const { setFavorite, topFavorite, removeFavorite, isFavorite } =
                   size="small"
                   @click="setFavorite"
                 />
-                <el-button
+                <!-- <el-button
                   type="danger"
                   :icon="Delete"
                   circle
                   size="small"
                   :loading="isDeleting"
                   @click="deletePost"
-                />
+                /> -->
                 <el-button
                   type="success"
                   :icon="Connection"
@@ -352,6 +298,9 @@ const { setFavorite, topFavorite, removeFavorite, isFavorite } =
     max-width: 300px;
     margin: 0 auto;
     position: relative;
+    &.main {
+      max-width: 200px;
+    }
     .replies-lable {
       width: 30px;
       position: absolute;

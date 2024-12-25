@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { axiosConfig } from '@/config'
-import { useAuthStore } from '@/stores'
 import router from '@/router'
 import { sakiMessage } from './message'
 
@@ -13,11 +12,11 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
-    // 携带token
-    const authStore = useAuthStore()
-    if (authStore.token) {
-      config.headers.Authorization = authStore.token
-    }
+    // // 携带token
+    // const authStore = useAuthStore()
+    // if (authStore.token) {
+    //   config.headers.Authorization = authStore.token
+    // }
     return config
   },
   (err) => Promise.reject(err)
@@ -40,25 +39,25 @@ instance.interceptors.response.use(
     return Promise.reject(res.data)
   },
   (err) => {
-    // TODO 5. 处理401错误
-    // 错误的特殊情况 => 401 权限不足 或 token 过期 => 拦截到登录
-    if (err.response?.status === 401) {
-      const authStore = useAuthStore()
-      if (authStore.token === '') {
-        sakiMessage({
-          type: 'error',
-          message: '请登录'
-        })
-      } else {
-        sakiMessage({
-          type: 'error',
-          message: '请重新登录'
-        })
-      }
-      authStore.removeToken()
-      router.push({ name: 'login' })
-      return Promise.reject(err)
-    }
+    // // TODO 5. 处理401错误
+    // // 错误的特殊情况 => 401 权限不足 或 token 过期 => 拦截到登录
+    // if (err.response?.status === 401) {
+    //   const authStore = useAuthStore()
+    //   if (authStore.token === '') {
+    //     sakiMessage({
+    //       type: 'error',
+    //       message: '请登录'
+    //     })
+    //   } else {
+    //     sakiMessage({
+    //       type: 'error',
+    //       message: '请重新登录'
+    //     })
+    //   }
+    //   authStore.removeToken()
+    //   router.push({ name: 'login' })
+    //   return Promise.reject(err)
+    // }
 
     // 错误的默认情况 => 只要给提示
     sakiMessage({

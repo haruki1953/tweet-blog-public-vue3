@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { platformKeyMap } from '@/config'
-import type { PostImportData, PostPoolItem } from '@/types'
-import { formatTimeAgoChs, sakiNotification } from '@/utils'
-import { Aim, Delete, Link } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-import { postControlDeleteImportDataApi } from '@/api'
+import type { PostPoolItem } from '@/types'
+import { formatTimeAgoChs } from '@/utils'
+import { Link } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 
 const props = defineProps<{
   postPoolItem: PostPoolItem
-  submitControl: (id: string, callback: () => Promise<any>) => Promise<void>
-  isSubmitting: (id: string) => boolean
 }>()
 
 // 降序排序
@@ -22,60 +18,12 @@ const postImports = computed(() => {
         new Date(b.importedAt).getTime() - new Date(a.importedAt).getTime()
     )
 })
-
-const isEditMode = ref(false)
-const toggleEditMode = () => {
-  isEditMode.value = !isEditMode.value
-}
-
-const deleteSubmit = async (item: PostImportData) => {
-  await props.submitControl(item.id, async () => {
-    await postControlDeleteImportDataApi(item.id)
-  })
-}
-const isDeleting = (item: PostImportData) => {
-  return props.isSubmitting(item.id)
-}
-
-const showPlatformPostId = async (item: PostImportData) => {
-  sakiNotification({
-    type: 'info',
-    title: `${platformKeyMap[item.platform].name} 中的 id :`,
-    message: `${item.platformPostId}`
-  })
-}
 </script>
 <template>
   <div class="import-info">
     <div class="import-info-box" v-if="postImports.length > 0">
       <div class="control-lable-with-button">
         <div class="lable">导入记录</div>
-        <Transition name="fade" mode="out-in">
-          <div class="button" v-if="isEditMode">
-            <el-button
-              class="forward-button"
-              type="danger"
-              size="small"
-              round
-              text
-              @click="toggleEditMode"
-            >
-              返回
-            </el-button>
-          </div>
-          <div class="button" v-else>
-            <el-button
-              class="forward-button"
-              type="primary"
-              size="small"
-              round
-              text
-              @click="toggleEditMode"
-            >
-              编辑
-            </el-button>
-          </div>
-        </Transition>
       </div>
       <div class="import-list">
         <TransitionGroup name="fade-slide-list">
@@ -94,46 +42,25 @@ const showPlatformPostId = async (item: PostImportData) => {
                   </div>
                 </div>
                 <div class="info-col right">
-                  <Transition name="fade" mode="out-in">
-                    <div class="date-button" v-if="isEditMode">
-                      <div class="button">
-                        <el-button
-                          type="warning"
-                          circle
-                          size="small"
-                          :icon="Aim"
-                          @click="showPlatformPostId(item)"
-                        />
-                        <el-button
-                          type="danger"
-                          circle
-                          size="small"
-                          :icon="Delete"
-                          :loading="isDeleting(item)"
-                          @click="deleteSubmit(item)"
-                        />
+                  <div class="date-button">
+                    <div class="date">
+                      <div class="text">
+                        {{ formatTimeAgoChs(item.importedAt) }}
                       </div>
                     </div>
-                    <div class="date-button" v-else>
-                      <div class="date">
-                        <div class="text">
-                          {{ formatTimeAgoChs(item.importedAt) }}
-                        </div>
-                      </div>
-                      <div class="button">
-                        <el-button
-                          type="primary"
-                          circle
-                          size="small"
-                          :icon="Link"
-                          tag="a"
-                          :href="item.link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        />
-                      </div>
+                    <div class="button">
+                      <el-button
+                        type="primary"
+                        circle
+                        size="small"
+                        :icon="Link"
+                        tag="a"
+                        :href="item.link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      />
                     </div>
-                  </Transition>
+                  </div>
                 </div>
               </div>
             </div>

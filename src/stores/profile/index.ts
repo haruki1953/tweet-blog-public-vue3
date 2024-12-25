@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
 import { useLoadModule } from './modules/load'
 import type { BackendProfileStore } from '@/types'
-import { useSettingModule } from './modules/setting'
-import { useSocialMediasModule } from './modules/social-medias'
 import { profileAvatarUrl, profileIconUrl } from '@/utils'
 import { profileConfig } from '@/config'
 
@@ -15,7 +13,7 @@ export type ProfileStoreModuleDependencies = {
 
 // 个人信息模块
 export const useProfileStore = defineStore(
-  'tweblog-profile',
+  'tweblog-public-profile',
   () => {
     const postNumber = ref(0)
     const imageNumber = ref(0)
@@ -65,13 +63,9 @@ export const useProfileStore = defineStore(
     }
 
     const loadModule = useLoadModule(dependencies)
-    const settingModule = useSettingModule()
-    const socialMediasModule = useSocialMediasModule()
 
     return {
       ...loadModule,
-      ...settingModule,
-      ...socialMediasModule,
       profile,
       postNumber,
       imageNumber,

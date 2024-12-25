@@ -3,7 +3,7 @@ import { useLoadingModule } from './modules/loading'
 import { useDarkModule } from './modules/dark'
 
 export const useStatesStore = defineStore(
-  'tweblog-states',
+  'tweblog-public-states',
   () => {
     const loadingModule = useLoadingModule()
     const darkModule = useDarkModule()

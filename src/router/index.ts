@@ -3,33 +3,17 @@ import { webName } from '@/config'
 import { nextTick, ref } from 'vue'
 // 下边这些可能是因为vue的vscode插件导致报错，先不管了
 import LayoutContainer from '@/views/layout/LayoutContainer.vue'
-import TestPage from '@/views/test/TestPage.vue'
 import HomePage from '@/views/home/HomePage.vue'
-import LoginPage from '@/views/login/LoginPage.vue'
-import SendPage from '@/views/post/SendPage.vue'
 import PostPage from '@/views/post/PostPage.vue'
 import PostForward from '@/views/post/PostForward.vue'
 import AlbumPage from '@/views/image/AlbumPage.vue'
-import ControlPage from '@/views/control/ControlPage.vue'
 import AboutPage from '@/views/about/AboutPage.vue'
-
-import SystemPage from '@/views/control/views/system-page/SystemPage.vue'
-import ProfilePage from '@/views/control/views/profile-page/ProfilePage.vue'
-import ForwardConfig from '@/views/control/views/forward-config/ForwardConfig.vue'
-import TweetImport from '@/views/control/views/tweet-import/TweetImport.vue'
-import LogPage from '@/views/control/views/log-page/LogPage.vue'
 
 import { useImageStore, usePostStore, useProfileStore } from '@/stores'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      name: 'login',
-      path: '/login',
-      component: LoginPage,
-      meta: { title: `登录` }
-    },
     {
       path: '/',
       component: LayoutContainer,
@@ -38,12 +22,6 @@ const router = createRouter({
           name: 'home',
           path: '',
           component: HomePage,
-          meta: { title: `` }
-        },
-        {
-          name: 'test',
-          path: '/test',
-          component: TestPage,
           meta: { title: `` }
         },
         {
@@ -59,52 +37,10 @@ const router = createRouter({
           meta: { title: `` }
         },
         {
-          name: 'send',
-          path: '/send',
-          component: SendPage,
-          meta: { title: `` }
-        },
-        {
           name: 'album',
           path: '/album',
           component: AlbumPage,
           meta: { title: `相册` }
-        },
-        {
-          path: '/control',
-          component: ControlPage,
-          children: [
-            {
-              name: 'system',
-              path: '',
-              component: SystemPage,
-              meta: { title: `系统设置` }
-            },
-            {
-              name: 'profile',
-              path: '/profile',
-              component: ProfilePage,
-              meta: { title: `个人信息` }
-            },
-            {
-              name: 'forward-config',
-              path: '/forward-config',
-              component: ForwardConfig,
-              meta: { title: `推文转发` }
-            },
-            {
-              name: 'tweet-import',
-              path: '/tweet-import',
-              component: TweetImport,
-              meta: { title: `推文导入` }
-            },
-            {
-              name: 'log',
-              path: '/log',
-              component: LogPage,
-              meta: { title: `日志` }
-            }
-          ]
         },
         {
           name: 'about',

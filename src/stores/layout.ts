@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { computed } from 'vue'
 
 export const useLayoutStore = defineStore(
-  'tweblog-layout',
+  'tweblog-public-layout',
   () => {
     const windowSize = useWindowSize()
     const col2IsShow2Col = computed(() => windowSize.width.value >= 992)

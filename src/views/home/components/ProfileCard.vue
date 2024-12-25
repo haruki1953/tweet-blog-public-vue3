@@ -14,27 +14,12 @@ import {
   useProfileStore
 } from '@/stores'
 import type { IconMenuItem, PostsGetMode } from '@/types'
-import PostDeleteAllDialog from './PostDeleteAllDialog.vue'
-import { profileAvatarUrl, sakiMessage } from '@/utils'
-import { profileConfig } from '@/config'
-
-// withDefaults(
-//   defineProps<{
-//     showLinkGroup?: boolean
-//   }>(),
-//   {
-//     showLinkGroup: false
-//   }
-// )
+import { sakiMessage } from '@/utils'
 
 const postStore = usePostStore()
 const statesStore = useStatesStore()
 const layoutStore = useLayoutStore()
 const profileStore = useProfileStore()
-
-const sendPost = () => {
-  postStore.toPostSendPage()
-}
 
 const searchVal = ref('')
 
@@ -68,34 +53,12 @@ const showAll = async () => {
   scrollToTop()
 }
 
-const showDelete = async () => {
-  if (isLoading.value) {
-    return
-  }
-  scrollToTop()
-  await postStore.deleteGetPosts()
-  scrollToTop()
-}
-
 const showFavorite = () => {
   if (isLoading.value) {
     return
   }
   scrollToTop()
   postStore.favoriteGetPosts()
-}
-
-// 清空回收站
-const refPostDeleteAllDialog = ref<InstanceType<
-  typeof PostDeleteAllDialog
-> | null>(null)
-const isDeleteAlling = ref(false)
-const deleteAll = async () => {
-  refPostDeleteAllDialog.value?.open()
-}
-const onDeleteAlled = () => {
-  postsGetModeMark.value = 'normal'
-  showAll()
 }
 
 // 清空收藏夹
@@ -146,13 +109,6 @@ const setModeToSearch = () => {
     showAll()
   }
 }
-const setModeToDelete = () => {
-  if (isLoading.value) {
-    return
-  }
-  postsGetModeMark.value = 'delete'
-  showDelete()
-}
 const setModeToFavorite = () => {
   if (isLoading.value) {
     return
@@ -184,13 +140,6 @@ const buttonMenu: ButtonMenuItem[] = [
     icon: Star,
     actionColor: 'warning',
     onClick: setModeToFavorite
-  },
-  {
-    index: 'delete',
-    title: '回收站',
-    icon: Delete,
-    actionColor: 'danger',
-    onClick: setModeToDelete
   }
 ]
 
@@ -206,11 +155,6 @@ const newPostText = computed(() => {
 </script>
 <template>
   <div class="profile-card">
-    <PostDeleteAllDialog
-      ref="refPostDeleteAllDialog"
-      v-model:isDeleteAlling="isDeleteAlling"
-      @deleted="onDeleteAlled"
-    ></PostDeleteAllDialog>
     <div class="user">
       <div class="avatar">
         <el-avatar :size="72" :src="profileStore.avatarUrl" />
@@ -271,25 +215,6 @@ const newPostText = computed(() => {
             />
           </div>
           <div
-            class="block-part-box delete-mode-box"
-            v-else-if="postsGetModeMark === 'delete'"
-            key="delete-mode-box"
-          >
-            <div class="info-lable">回收站</div>
-            <div class="button-row">
-              <el-button
-                round
-                type="danger"
-                :icon="Delete"
-                size="small"
-                :loading="isDeleteAlling"
-                @click="deleteAll"
-              >
-                清空回收站
-              </el-button>
-            </div>
-          </div>
-          <div
             class="block-part-box favorite-mode-box"
             v-else-if="postsGetModeMark === 'favorite'"
             key="favorite-mode-box"
@@ -328,11 +253,11 @@ const newPostText = computed(() => {
       </div>
     </div>
 
-    <div class="send-button-box">
+    <!-- <div class="send-button-box">
       <el-button class="profile-button" type="primary" round @click="sendPost">
         发 推
       </el-button>
-    </div>
+    </div> -->
   </div>
 </template>
 

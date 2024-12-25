@@ -123,12 +123,12 @@ watch(
   }
 )
 
-const replyPost = () => {
-  if (!postPoolItem.value) {
-    return
-  }
-  postStore.toReplySendPage(postPoolItem.value.mainPost)
-}
+// const replyPost = () => {
+//   if (!postPoolItem.value) {
+//     return
+//   }
+//   postStore.toReplySendPage(postPoolItem.value.mainPost)
+// }
 
 // 优化单帖子（无回复，即单列显示）情况下，从骨架屏到帖子的过渡
 // 当在初始化（setup）时就有数据，禁用过渡（避免重复过渡）
@@ -150,11 +150,11 @@ const haveMainPostOnSetUp = mainPostGroup.value != null
               <div class="main-post-group-box">
                 <PostGroup :data="mainPostGroup"></PostGroup>
               </div>
-              <div class="replie-button-box col1">
+              <!-- <div class="replie-button-box col1">
                 <el-button type="primary" round @click="replyPost">
                   回 复
                 </el-button>
-              </div>
+              </div> -->
               <BottomSkeleton :show="isShowSkeleton"></BottomSkeleton>
             </DataContainerMountedMask>
           </div>
@@ -170,22 +170,22 @@ const haveMainPostOnSetUp = mainPostGroup.value != null
             <div class="main-post-group-box" v-if="mainPostGroup">
               <PostGroup :data="mainPostGroup"></PostGroup>
             </div>
-            <div class="replie-button-box">
+            <!-- <div class="replie-button-box">
               <el-button type="primary" round @click="replyPost">
                 回 复
               </el-button>
-            </div>
+            </div> -->
           </template>
           <template #colLeft>
             <TopBar title="查看推文"></TopBar>
             <div class="main-post-group-box" v-if="mainPostGroup">
               <PostGroup :data="mainPostGroup"></PostGroup>
             </div>
-            <div class="replie-button-box">
+            <!-- <div class="replie-button-box">
               <el-button type="primary" round @click="replyPost">
                 回 复
               </el-button>
-            </div>
+            </div> -->
           </template>
           <template #colRight>
             <div class="replies-post-group-box" v-if="postPoolItem">

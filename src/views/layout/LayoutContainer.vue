@@ -1,19 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { dataConfirmLoginService } from '@/services'
-import {
-  HomeFilled,
-  InfoFilled,
-  PictureFilled,
-  Tools
-} from '@element-plus/icons-vue'
+import { HomeFilled, InfoFilled, PictureFilled } from '@element-plus/icons-vue'
 import ImageAltDialog from './components/ImageAltDialog.vue'
 import MenuIsland from './components/MenuIsland.vue'
-
-onMounted(async () => {
-  // check login
-  dataConfirmLoginService()
-})
 
 const menu = [
   {
@@ -25,11 +14,6 @@ const menu = [
     index: '/album',
     title: '相册',
     icon: PictureFilled
-  },
-  {
-    index: '/control',
-    title: '功能',
-    icon: Tools
   },
   {
     index: '/about',

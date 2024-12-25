@@ -1,15 +1,10 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import {
-  useAltDialogModule,
-  useListModule,
-  useManageModule,
-  useUploadModule
-} from './modules'
+import { useAltDialogModule, useListModule } from './modules'
 import type { ImageStoreData } from '@/types'
 
 export const useImageStore = defineStore(
-  'tweblog-image',
+  'tweblog-public-image',
   () => {
     // data
     const imageList = ref<ImageStoreData[]>([])
@@ -25,12 +20,6 @@ export const useImageStore = defineStore(
     const listModule = useListModule({
       imageList
     })
-    const manageModule = useManageModule({
-      imageList
-    })
-    const uploadModule = useUploadModule({
-      manageAfterUploadImage: manageModule.manageAfterUploadImage
-    })
     const altDialogModule = useAltDialogModule()
 
     return {
@@ -38,8 +27,6 @@ export const useImageStore = defineStore(
       isNeedReget,
       setNeedReget,
       ...listModule,
-      ...uploadModule,
-      ...manageModule,
       ...altDialogModule
     }
   },

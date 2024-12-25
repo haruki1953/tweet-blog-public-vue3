@@ -9,7 +9,6 @@ import {
 } from '@/utils'
 import { imageConfig } from '@/config'
 import { useImageEditCardController } from '../controller'
-import { useImageEditService } from '@/services'
 
 const props = withDefaults(
   defineProps<{
@@ -42,21 +41,21 @@ const { isIndexAble, imageByIndex, initFormModel } = useImageEditCardController(
   }
 )
 
-const {
-  isSending,
-  updateImage,
-  disableDeleteImage,
-  disableDeleteOriginal,
-  isImageDeleting,
-  deleteImage,
-  isOriginalDeleting,
-  deleteOriginal
-} = useImageEditService({
-  selectedImages,
-  formModel,
-  isIndexAble,
-  imageByIndex
-})
+// const {
+//   isSending,
+//   updateImage,
+//   disableDeleteImage,
+//   disableDeleteOriginal,
+//   isImageDeleting,
+//   deleteImage,
+//   isOriginalDeleting,
+//   deleteOriginal
+// } = useImageEditService({
+//   selectedImages,
+//   formModel,
+//   isIndexAble,
+//   imageByIndex
+// })
 </script>
 <template>
   <div class="i-e-c-control-box">
@@ -64,43 +63,14 @@ const {
       <div class="control-row">
         <!-- 修改alt -->
         <div class="update-alt-box">
-          <div class="control-lable">修改alt</div>
+          <div class="control-lable">alt</div>
           <Transition name="fade" mode="out-in">
-            <div class="input-box" :key="imageByIndex.id">
-              <el-input
-                v-model="formModel.alt"
-                placeholder="添加描述"
-                :autosize="{ minRows: 1, maxRows: 10 }"
-                resize="none"
-                type="textarea"
-                size="large"
-                class="textarea"
-                :maxlength="imageConfig.maxAltCharactersOnSend"
-                show-word-limit
-                suffix-icon="Calendar"
-              />
-            </div>
-          </Transition>
-          <Transition name="fade" mode="out-in">
-            <div class="button-box" :key="imageByIndex.id">
-              <el-button
-                round
-                type="primary"
-                size="small"
-                @click="updateImage"
-                :loading="isSending"
-              >
-                保存
-              </el-button>
-              <el-button
-                round
-                type="info"
-                size="small"
-                @click="initFormModel"
-                :disabled="isSending"
-              >
-                取消
-              </el-button>
+            <div class="content-box" :key="imageByIndex.id">
+              <div class="content">
+                <TextWithLink
+                  :data="imageByIndex.alt || '暂无描述'"
+                ></TextWithLink>
+              </div>
             </div>
           </Transition>
         </div>
@@ -151,50 +121,27 @@ const {
           </div>
         </Transition>
       </div>
-      <div class="control-divider"></div>
-      <!-- 删除图片 -->
-      <div class="control-row">
-        <div class="control-lable">删除图片</div>
-        <Transition name="fade" mode="out-in">
-          <div class="button-box" :key="imageByIndex.id">
-            <el-button
-              round
-              type="danger"
-              size="small"
-              disabled
-              v-if="disableDeleteImage"
-            >
-              图片使用中
-            </el-button>
-            <el-button
-              round
-              type="danger"
-              size="small"
-              :loading="isImageDeleting"
-              @click="deleteImage"
-              v-else
-            >
-              删除图片
-            </el-button>
-            <el-button
-              round
-              type="warning"
-              size="small"
-              :disabled="disableDeleteOriginal"
-              :loading="isOriginalDeleting"
-              @click="deleteOriginal"
-            >
-              删除原图
-            </el-button>
-          </div>
-        </Transition>
-      </div>
-      <!-- </template> -->
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.content-box {
+  display: flex;
+  justify-content: center;
+  // padding: 0 0 8px 0;
+  margin: 0 10px 10px 10px;
+  .content {
+    max-width: 100%;
+    color: var(--color-text-soft);
+    white-space: pre-wrap;
+    // 解决在全英文无空格时，文字无法换行的问题
+    word-wrap: break-word;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+}
+
 .input-box {
   .textarea {
     // background-color: var(--color-background-soft);

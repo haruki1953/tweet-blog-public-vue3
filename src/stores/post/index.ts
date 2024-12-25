@@ -1,16 +1,10 @@
 import type { PostPoolItem, PostData } from '@/types'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import {
-  useControlModule,
-  useListModule,
-  useManageModule,
-  usePoolModule,
-  useReadModule
-} from './modules'
+import { useListModule, usePoolModule, useReadModule } from './modules'
 
 export const usePostStore = defineStore(
-  'tweblog-post',
+  'tweblog-public-post',
   () => {
     // 多Module共享数据
     const postList = ref<PostData[][]>([])
@@ -36,15 +30,6 @@ export const usePostStore = defineStore(
       }
     }
 
-    // manageModule, for manage data
-    const manageModule = useManageModule({
-      postList,
-      postPool
-    })
-
-    // controlModule
-    const controlModule = useControlModule()
-
     // readModule
     const readModule = useReadModule({
       postList
@@ -53,8 +38,6 @@ export const usePostStore = defineStore(
     return {
       ...listModule,
       ...poolModule,
-      ...controlModule,
-      ...manageModule,
       ...readModule,
       postList,
       postPool,

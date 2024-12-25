@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { getScrollbarWidth } from './utils'
-import { dataConfirmLoginService, dataFirstLoadService } from './services'
+import { dataFirstLoadService } from './services'
 import { useStatesStore } from './stores'
 
-// 检查登录，等待加载数据，之后取消在 index.html 中的加载遮罩
+// 等待加载数据，之后取消在 index.html 中的加载遮罩
 onMounted(async () => {
-  const isLogin = dataConfirmLoginService()
-  if (isLogin) {
-    await dataFirstLoadAwait()
-  }
+  await dataFirstLoadAwait()
   indexMaskClose()
 })
 

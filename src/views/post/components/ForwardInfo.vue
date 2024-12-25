@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import { platformKeyMap } from '@/config'
-import type { PostForwardData, PostPoolItem } from '@/types'
-import { formatTimeAgoChs, sakiNotification } from '@/utils'
-import { Aim, Connection, Delete, Link } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-import { postControlDeleteForwardDataApi } from '@/api'
+import type { PostPoolItem } from '@/types'
+import { formatTimeAgoChs } from '@/utils'
+import { Link } from '@element-plus/icons-vue'
 import { computed } from 'vue'
-import { useForwardStore } from '@/stores'
 
 const props = defineProps<{
   postPoolItem: PostPoolItem
-  submitControl: (id: string, callback: () => Promise<any>) => Promise<void>
-  isSubmitting: (id: string) => boolean
 }>()
 
 // 降序排序
@@ -23,77 +18,12 @@ const postForwards = computed(() => {
         new Date(b.forwardAt).getTime() - new Date(a.forwardAt).getTime()
     )
 })
-
-const isEditMode = ref(false)
-const toggleEditMode = () => {
-  isEditMode.value = !isEditMode.value
-}
-
-const deleteSubmit = async (item: PostForwardData) => {
-  await props.submitControl(item.id, async () => {
-    await postControlDeleteForwardDataApi(item.id)
-  })
-}
-const isDeleting = (item: PostForwardData) => {
-  return props.isSubmitting(item.id)
-}
-
-const showPlatformPostId = async (item: PostForwardData) => {
-  sakiNotification({
-    type: 'info',
-    title: `${platformKeyMap[item.platform].name} 中的 id :`,
-    message: `${item.platformPostId}`
-  })
-}
-
-const showForwardConfigId = async (item: PostForwardData) => {
-  sakiNotification({
-    type: 'info',
-    title: `转发配置 uuid :`,
-    message: `${item.forwardConfigId}`
-  })
-}
-
-const forwardStore = useForwardStore()
-
-const forwardSettingName = (item: PostForwardData) => {
-  const find = forwardStore.forwardSettingList.find(
-    (i) => i.uuid === item.forwardConfigId
-  )
-  return find?.name
-}
 </script>
 <template>
   <div class="import-info">
     <div class="import-info-box" v-if="postForwards.length > 0">
       <div class="control-lable-with-button">
         <div class="lable">转发记录</div>
-        <Transition name="fade" mode="out-in">
-          <div class="button" v-if="isEditMode">
-            <el-button
-              class="forward-button"
-              type="danger"
-              size="small"
-              round
-              text
-              @click="toggleEditMode"
-            >
-              返回
-            </el-button>
-          </div>
-          <div class="button" v-else>
-            <el-button
-              class="forward-button"
-              type="primary"
-              size="small"
-              round
-              text
-              @click="toggleEditMode"
-            >
-              编辑
-            </el-button>
-          </div>
-        </Transition>
       </div>
       <div class="import-list">
         <TransitionGroup name="fade-slide-list">
@@ -107,61 +37,30 @@ const forwardSettingName = (item: PostForwardData) => {
                       size="20"
                     ></el-icon>
                     <div class="text">
-                      {{
-                        forwardSettingName(item) ||
-                        platformKeyMap[item.platform].name
-                      }}
+                      {{ platformKeyMap[item.platform].name }}
                     </div>
                   </div>
                 </div>
                 <div class="info-col right">
-                  <Transition name="fade" mode="out-in">
-                    <div class="date-button" v-if="isEditMode">
-                      <div class="button">
-                        <el-button
-                          type="success"
-                          circle
-                          size="small"
-                          :icon="Connection"
-                          @click="showForwardConfigId(item)"
-                        />
-                        <el-button
-                          type="warning"
-                          circle
-                          size="small"
-                          :icon="Aim"
-                          @click="showPlatformPostId(item)"
-                        />
-                        <el-button
-                          type="danger"
-                          circle
-                          size="small"
-                          :icon="Delete"
-                          :loading="isDeleting(item)"
-                          @click="deleteSubmit(item)"
-                        />
+                  <div class="date-button">
+                    <div class="date">
+                      <div class="text">
+                        {{ formatTimeAgoChs(item.forwardAt) }}
                       </div>
                     </div>
-                    <div class="date-button" v-else>
-                      <div class="date">
-                        <div class="text">
-                          {{ formatTimeAgoChs(item.forwardAt) }}
-                        </div>
-                      </div>
-                      <div class="button">
-                        <el-button
-                          type="primary"
-                          circle
-                          size="small"
-                          :icon="Link"
-                          tag="a"
-                          :href="item.link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        />
-                      </div>
+                    <div class="button">
+                      <el-button
+                        type="primary"
+                        circle
+                        size="small"
+                        :icon="Link"
+                        tag="a"
+                        :href="item.link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      />
                     </div>
-                  </Transition>
+                  </div>
                 </div>
               </div>
             </div>
