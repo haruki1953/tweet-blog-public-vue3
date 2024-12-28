@@ -1,8 +1,8 @@
 // const apiBaseUrl = 'http://localhost:3000/api/public/'
 // const staticBaseUrl = 'http://localhost:3000/'
-// const apiBaseUrl = 'http://192.168.2.110:3000/api/'
+// const apiBaseUrl = 'http://192.168.2.110:3000/api/public/'
 // const staticBaseUrl = 'http://192.168.2.110:3000/'
-const apiBaseUrl = '/api/'
+const apiBaseUrl = '/api/public/'
 const staticBaseUrl = '/'
 
 export const axiosConfig = {
