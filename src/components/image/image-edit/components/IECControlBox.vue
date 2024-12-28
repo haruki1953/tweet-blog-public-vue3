@@ -63,7 +63,7 @@ const { isIndexAble, imageByIndex, initFormModel } = useImageEditCardController(
       <div class="control-row">
         <!-- 修改alt -->
         <div class="update-alt-box">
-          <div class="control-lable">alt</div>
+          <div class="control-lable">ALT</div>
           <Transition name="fade" mode="out-in">
             <div class="content-box" :key="imageByIndex.id">
               <div class="content">
