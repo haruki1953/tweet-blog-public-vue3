@@ -1,9 +1,9 @@
-// const apiBaseUrl = 'http://localhost:3000/api/public/'
-// const staticBaseUrl = 'http://localhost:3000/'
+const apiBaseUrl = 'http://localhost:3000/api/public/'
+const staticBaseUrl = 'http://localhost:3000/'
 // const apiBaseUrl = 'http://192.168.2.110:3000/api/public/'
 // const staticBaseUrl = 'http://192.168.2.110:3000/'
-const apiBaseUrl = '/api/public/'
-const staticBaseUrl = '/'
+// const apiBaseUrl = '/api/public/'
+// const staticBaseUrl = '/'
 
 export const axiosConfig = {
   baseUrl: apiBaseUrl,
@@ -15,7 +15,7 @@ export const webName = 'Tweblog'
 // logo图标
 // import logoImage from '@/assets/logo.png'
 // import logoImage from '@/assets/icon2x.png'
-import logoImage from '@/assets/tweet.png'
+import logoImage from '@/assets/tweet.svg'
 export { logoImage }
 
 export const profileConfig = {
