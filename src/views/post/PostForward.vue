@@ -70,24 +70,26 @@ const havePostOnSetUp = postPoolItem.value != null
           </div>
         </template>
         <template #colRight>
-          <div
-            v-if="
-              postPoolItem == null ||
-              (postPoolItem.mainPost.postForwards.length === 0 &&
-                postPoolItem.mainPost.postImports.length === 0)
-            "
-          >
-            <TweetEmpty description="暂无转发记录"></TweetEmpty>
-          </div>
-          <div v-else>
-            <!-- <ForwardSubmitList
+          <Transition name="fade" mode="out-in">
+            <div
+              v-if="
+                postPoolItem == null ||
+                (postPoolItem.mainPost.postForwards.length === 0 &&
+                  postPoolItem.mainPost.postImports.length === 0)
+              "
+            >
+              <TweetEmpty description="暂无转发记录"></TweetEmpty>
+            </div>
+            <div v-else>
+              <!-- <ForwardSubmitList
               :postPoolItem="postPoolItem"
               :isSubmitting="isSubmitting"
               :submitControl="submitControl"
             ></ForwardSubmitList> -->
-            <ForwardInfo :postPoolItem="postPoolItem"></ForwardInfo>
-            <ImportInfo :postPoolItem="postPoolItem"></ImportInfo>
-          </div>
+              <ForwardInfo :postPoolItem="postPoolItem"></ForwardInfo>
+              <ImportInfo :postPoolItem="postPoolItem"></ImportInfo>
+            </div>
+          </Transition>
         </template>
       </Col2Layout>
     </DataContainerMountedMask>
