@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePostStore } from '@/stores'
 import { onMounted } from 'vue'
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ForwardInfo from './components/ForwardInfo.vue'
