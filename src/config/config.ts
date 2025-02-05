@@ -1,14 +1,14 @@
-// // 开发时使用的
-// const apiBaseUrl = 'http://localhost:3000/api/public/'
-// const staticBaseUrl = 'http://localhost:3000/'
+// 开发时使用的
+const apiBaseUrl = 'http://localhost:3000/api/public/'
+const staticBaseUrl = 'http://localhost:3000/'
 
 // // 这是为了在手机上测试，需要的话要改为自己电脑的ip
 // const apiBaseUrl = 'http://192.168.2.110:3000/api/public/'
 // const staticBaseUrl = 'http://192.168.2.110:3000/'
 
-// 部署时，将由后端来托管前端，设置为根路径
-const apiBaseUrl = '/api/public/'
-const staticBaseUrl = '/'
+// // 部署时，将由后端来托管前端，设置为根路径
+// const apiBaseUrl = '/api/public/'
+// const staticBaseUrl = '/'
 
 export const axiosConfig = {
   baseUrl: apiBaseUrl,
@@ -18,8 +18,6 @@ export const axiosConfig = {
 export const webName = 'Tweblog'
 
 // logo图标
-// import logoImage from '@/assets/logo.png'
-// import logoImage from '@/assets/icon2x.png'
 import logoImage from '@/assets/tweet.svg'
 export { logoImage }
 
@@ -65,7 +63,8 @@ export const imageConfig = {
 
 export const postConfig = {
   // 帖子最多可包含的图片数
-  postMaxImages: 4,
+  // postMaxImages: 4,
+  postMaxImages: 40,
   // 一次请求中帖子的一般数量
   postNumInOnceRequest: 20,
   // 无限滚动中的数量限制
