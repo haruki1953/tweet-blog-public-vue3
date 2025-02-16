@@ -81,11 +81,15 @@ export const postConfig = {
   maxPostCharactersOnSend: 280,
   // Telegram 的
   maxPostCharactersOnSendTelegram: 1024,
+  // Discord 的
+  maxPostCharactersOnSendDiscord: 2000,
   // 开始警告的剩余字数
   // X 的
   remainingCharsToWarning: 20,
   // Telegram 的
   remainingCharsToWarningTelegram: 20,
+  // Discord 的
+  remainingCharsToWarningDiscord: 20,
   // 持久化保存的帖子数据的最大数量
   postPoolSizeLimit: 100,
   // 超过限制时移除的数量
