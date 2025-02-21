@@ -69,7 +69,8 @@ export const postConfig = {
   postNumInOnceRequest: 20,
   // 无限滚动中的数量限制
   limitShow: {
-    startAmounts: 4,
+    // 【250221】从4个修改为6个
+    startAmounts: 6,
     limitAmounts: 4
   },
   // 链接在显示时的长度限制
@@ -83,6 +84,8 @@ export const postConfig = {
   maxPostCharactersOnSendTelegram: 1024,
   // Discord 的
   maxPostCharactersOnSendDiscord: 2000,
+  // Bluesky 的
+  maxPostCharactersOnSendBluesky: 300,
   // 开始警告的剩余字数
   // X 的
   remainingCharsToWarning: 20,
@@ -90,6 +93,8 @@ export const postConfig = {
   remainingCharsToWarningTelegram: 20,
   // Discord 的
   remainingCharsToWarningDiscord: 20,
+  // Bluesky 的
+  remainingCharsToWarningBluesky: 20,
   // 持久化保存的帖子数据的最大数量
   postPoolSizeLimit: 100,
   // 超过限制时移除的数量
